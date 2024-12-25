@@ -11,4 +11,4 @@ USER spring:spring
 
 COPY ./build/libs/${JAR_NAME} ./${JAR_NAME}
 
-ENTRYPOINT ["java", "-jar", "/app/ts-user-service.jar"]
+ENTRYPOINT ["java", "-jar", "/app/ts-tour-data-service.jar"]
