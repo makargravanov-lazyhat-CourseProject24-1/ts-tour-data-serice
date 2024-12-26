@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import ru.jetlabs.ts.tourdataservice.models.Place
 import ru.jetlabs.ts.tourdataservice.service.PlacesService
 
 @RestController
@@ -13,7 +14,7 @@ class PlacesController(
     private val placesService: PlacesService,
 ) {
     @GetMapping
-    fun getPlaces(@RequestParam name: String?, @RequestParam address: String?): ResponseEntity<*> =
+    fun getPlaces(@RequestParam name: String?, @RequestParam address: String?): ResponseEntity<List<Place>> =
         placesService.getPlaces(
             name = name,
             address = address
