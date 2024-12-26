@@ -1,10 +1,9 @@
 package ru.jetlabs.ts.tourdataservice.rest
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import ru.jetlabs.ts.tourdataservice.models.GetPlaceByIdResult
 import ru.jetlabs.ts.tourdataservice.models.Place
 import ru.jetlabs.ts.tourdataservice.service.PlacesService
 
@@ -19,4 +18,12 @@ class PlacesController(
             name = name,
             address = address
         ).let { ResponseEntity.ok(it) }
+
+    @GetMapping("/{id}")
+    fun getPlaceById(@PathVariable id: Long): ResponseEntity<Place> = placesService.getPlaceById(id).let {
+        when (it) {
+            GetPlaceByIdResult.NotFound -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+            is GetPlaceByIdResult.Success -> ResponseEntity.status(HttpStatus.OK).body(it.data)
+        }
+    }
 }

@@ -6,6 +6,7 @@ import ru.jetlabs.ts.tourdataservice.models.enums.RoomType
 
 data class HotelRoom(
     val id: Long,
+    val hotel: Hotel,
     val capacity: RoomCapacity,
     val type: RoomType,
     val wifi: Boolean,
@@ -14,6 +15,7 @@ data class HotelRoom(
 
 fun HotelRoomDao.mapToHotelRoom(): HotelRoom = HotelRoom(
     id = id.value,
+    hotel = hotel.mapToHotel(),
     capacity = capacity,
     type = type,
     wifi = wifi,

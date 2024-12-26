@@ -2,10 +2,8 @@ package ru.jetlabs.ts.tourdataservice.rest
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import ru.jetlabs.ts.tourdataservice.models.GetHotelByIdResult
 import ru.jetlabs.ts.tourdataservice.models.Hotel
 import ru.jetlabs.ts.tourdataservice.models.enums.HotelLevel
 import ru.jetlabs.ts.tourdataservice.service.HotelsService
@@ -20,4 +18,12 @@ class HotelsController(
         @RequestParam level: HotelLevel?, @RequestParam placeId: Long?, @RequestParam name: String?
     ): ResponseEntity<List<Hotel>> =
         hotelsService.getHotels(level = level, placeId = placeId, name = name).let { ResponseEntity.status(HttpStatus.OK).body(it) }
+
+    @GetMapping("/{id}")
+    fun getHotelById( @PathVariable id: Long): ResponseEntity<Hotel> = hotelsService.getHotelById(id).let {
+        when (it) {
+            GetHotelByIdResult.NotFound -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+            is GetHotelByIdResult.Success -> ResponseEntity.status(HttpStatus.OK).body(it.data)
+        }
+    }
 }

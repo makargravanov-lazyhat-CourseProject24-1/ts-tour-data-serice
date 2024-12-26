@@ -5,6 +5,7 @@ import org.jetbrains.exposed.sql.and
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import ru.jetlabs.ts.tourdataservice.daos.HotelRoomDao
+import ru.jetlabs.ts.tourdataservice.models.GetRoomByIdResult
 import ru.jetlabs.ts.tourdataservice.models.HotelRoom
 import ru.jetlabs.ts.tourdataservice.models.enums.RoomCapacity
 import ru.jetlabs.ts.tourdataservice.models.enums.RoomType
@@ -21,5 +22,9 @@ class HotelRoomsService {
                     (if (wifi != null) HotelRooms.wifi eq wifi else Op.TRUE) and
                     (if (hotelId != null) HotelRooms.hotel eq hotelId else Op.TRUE)
         }.map { it.mapToHotelRoom() }
+
+    fun getRoomById(id: Long): GetRoomByIdResult = HotelRoomDao.findById(id)?.mapToHotelRoom()?.let {
+        GetRoomByIdResult.Success(it)
+    } ?: GetRoomByIdResult.NotFound
 }
 

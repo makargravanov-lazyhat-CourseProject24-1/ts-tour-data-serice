@@ -5,6 +5,7 @@ import org.jetbrains.exposed.sql.and
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import ru.jetlabs.ts.tourdataservice.daos.TransportRouteDao
+import ru.jetlabs.ts.tourdataservice.models.GetRouteByIdResult
 import ru.jetlabs.ts.tourdataservice.models.TransportRoute
 import ru.jetlabs.ts.tourdataservice.models.enums.TransportType
 import ru.jetlabs.ts.tourdataservice.models.mapToTransportRoute
@@ -23,4 +24,8 @@ class RoutesService {
                 (if (arrivePlaceId != null) TransportRoutes.arrivePlace eq arrivePlaceId else Op.TRUE)
     }.map { it.mapToTransportRoute() }
         .filter { if (transportType != null) it.transport.type == transportType else true }
+
+    fun getRouteById(id: Long): GetRouteByIdResult = TransportRouteDao.findById(id)?.mapToTransportRoute()?.let {
+        GetRouteByIdResult.Success(it)
+    } ?: GetRouteByIdResult.NotFound
 }
