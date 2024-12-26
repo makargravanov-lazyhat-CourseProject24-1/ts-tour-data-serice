@@ -1,1 +1,1 @@
-rootProject.name = "ts-user-service"
+rootProject.name = "ts-tour-data-service"
