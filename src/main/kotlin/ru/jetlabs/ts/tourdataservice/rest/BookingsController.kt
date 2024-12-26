@@ -43,7 +43,7 @@ class BookingsController(
 
     @PostMapping("/route")
     fun bookRoute(@RequestBody body: RouteBookingForm): ResponseEntity<*> = bookingService.bookRoute(form = body).let {
-        when(it){
+        when(it) {
             is RouteBookingResult.Success -> ResponseEntity.status(HttpStatus.OK).body(it.routeBooking)
             is RouteBookingResult.Error -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(it)
         }
