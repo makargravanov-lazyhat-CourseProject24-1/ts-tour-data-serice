@@ -11,7 +11,7 @@ import ru.jetlabs.ts.tourdataservice.models.enums.RoomType
 import ru.jetlabs.ts.tourdataservice.service.HotelRoomsService
 
 @RestController
-@RequestMapping("/ts-tour-data-service/rooms")
+@RequestMapping("/ts-tour-data-service/api/v1/rooms")
 class HotelRoomsController(
     val roomsService: HotelRoomsService
 ) {
@@ -25,3 +25,4 @@ class HotelRoomsController(
         ResponseEntity.status(HttpStatus.OK).body(it)
     }
 }
+

@@ -22,3 +22,4 @@ class HotelRoomsService {
                     (if (hotelId != null) HotelRooms.hotel eq hotelId else Op.TRUE)
         }.map { it.mapToHotelRoom() }
 }
+
