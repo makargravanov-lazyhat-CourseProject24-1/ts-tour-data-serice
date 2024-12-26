@@ -24,3 +24,8 @@ sealed interface GetRouteByIdResult {
     data class Success(val data: TransportRoute) : GetRouteByIdResult
     data object NotFound : GetRouteByIdResult
 }
+
+sealed interface GetNutritionByIdResult {
+    data class Success(val data: HotelNutrition) : GetNutritionByIdResult
+    data object NotFound : GetNutritionByIdResult
+}
